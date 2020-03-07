@@ -1,0 +1,88 @@
+{
+    "name": "gnuplot",
+    "displayName": "Gnuplot Preview",
+    "description": "Gnuplot perviewer for Visual Studio Code",
+    "version": "0.0.1",
+    "publisher": "fizzybreezy",
+    "license": "MIT License",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "keywords": [
+        "gnuplot",
+        "preview"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fizzybreezy/vscode-gnuplot.git"
+    },
+    "icon": "images/icon.png",
+    "bugs": "https://github.com/fizzybreezy/vscode-gnuplot/issues",
+    "activationEvents": [
+        "onLanguage:gnuplot",
+        "onCommand:gnuplot.view"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "languages": [
+            {
+                "id": "gnuplot",
+                "aliases": [
+                    "Gnuplot",
+                    "gnuplot"
+                ],
+                "extensions": [
+                    ".gp",
+                    ".gnuplot",
+                    ".gnu",
+                    ".plot",
+                    ".plt"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "gnuplot",
+                "scopeName": "source.gnuplot",
+                "path": "./syntaxes/gnuplot.tmLanguage"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "gnuplot",
+                "path": "./snippets/gnuplot.json"
+            }
+        ],
+        "commands": [
+            {
+                "command": "gnuplot.view",
+                "title": "Gnuplot: Preview Figure",
+                "category": "Gnuplot"
+            }
+        ],
+        "keybindings": [
+            {
+                "key": "ctrl+alt+v",
+                "mac": "cmd+alt+v",
+                "command": "gnuplot.view"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "tslint -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^10.14.17",
+        "@types/vscode": "^1.34.0",
+        "tslint": "^5.16.0",
+        "typescript": "^3.5.1"
+    }
+}

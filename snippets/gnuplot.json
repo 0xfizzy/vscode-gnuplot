@@ -1,0 +1,237 @@
+{
+  "a3 landscape": {
+    "prefix": "a3",
+    "body": [
+      "42cm, 29cm"
+    ],
+    "description": "A3 landscape"
+  },
+  "a3 portrait": {
+    "prefix": "a3p",
+    "body": [
+      "29cm, 42cm"
+    ],
+    "description": "A3 portrait"
+  },
+  "a4 landscape": {
+    "prefix": "a4",
+    "body": [
+      "29cm, 20cm"
+    ],
+    "description": "A4 landscape"
+  },
+  "a4 portrait": {
+    "prefix": "a4p",
+    "body": [
+      "20cm, 29cm"
+    ],
+    "description": "A4 portrait"
+  },
+  "a5 landscape": {
+    "prefix": "a5",
+    "body": [
+      "21cm, 14cm"
+    ],
+    "description": "A5 landscape"
+  },
+  "a5 portrait": {
+    "prefix": "a5p",
+    "body": [
+      "14cm, 21cm"
+    ],
+    "description": "A5 portrait"
+  },
+  "fit": {
+    "prefix": "fit",
+    "body": [
+      "fit ${1:f(x)} ${2:\"$3.dat\"}${4: using ${5:1:2}} ${6:via}"
+    ],
+    "description": "Fit a user-defined function to a set of data points"
+  },
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for [${1:i} = ${2:start}:${3:stop}:${4:step}] $0"
+    ],
+    "description": "For loop"
+  },
+  "function": {
+    "prefix": "f",
+    "body": [
+      "${1:f}${2:(${3:x})} = $0"
+    ],
+    "description": "User defined function"
+  },
+  "key": {
+    "prefix": "key",
+    "body": [
+      "set key ${1:top right}",
+      "$0"
+    ],
+    "description": " The set key enables a key (or legend) describing plots on a plot."
+  },
+  "letter landscape": {
+    "prefix": "letter",
+    "body": [
+      "10.5in, 8in"
+    ],
+    "description": "Letter landscape"
+  },
+  "letter portrait": {
+    "prefix": "letterp",
+    "body": [
+      "8in, 10.5in"
+    ],
+    "description": "Letter portrait"
+  },
+  "plot": {
+    "prefix": "plot",
+    "body": [
+      "plot ${1:f(x)}${2: using ${3:1:2} }with ${4:lines} ${5:title \"$6\"}${7:,\\}"
+    ],
+    "description": "Plot data"
+  },
+  "terminal": {
+    "prefix": "term",
+    "body": [
+      "terminal"
+    ],
+    "description": "Terminal"
+  },
+  "title": {
+    "prefix": "title",
+    "body": [
+      "set title \"$1\"",
+      "$0"
+    ],
+    "description": "Set the plot title that is centered at the top of the plot."
+  },
+  "xrange": {
+    "prefix": "xrange",
+    "body": [
+      "set xrange [${1:0}:${2:10}]",
+      "$0"
+    ],
+    "description": "Sets the horizontal range that will be displayed."
+  },
+  "yrange": {
+    "prefix": "yrange",
+    "body": [
+      "set yrange [${1:0}:${2:10}]",
+      "$0"
+    ],
+    "description": "Sets the vertical range that will be displayed."
+  },
+  "zrange": {
+    "prefix": "zrange",
+    "body": [
+      "set zrange [${1:0}:${2:10}]",
+      "$0"
+    ],
+    "description": "The set zrange command sets the range that will be displayed on the z axis"
+  },
+  "cbrange": {
+    "prefix": "cbrange",
+    "body": [
+      "set cbrange [${1:0}:${2:10}]",
+      "$0"
+    ],
+    "description": "The set cbrange command sets the range that will be displayed on the color bar axis"
+  },
+  "xlabel": {
+    "prefix": "xlabel",
+    "body": [
+      "set xlabel '${1:x}'",
+      "$0"
+    ],
+    "description": "Sets the x axis title that will be displayed."
+  },
+  "ylabel": {
+    "prefix": "ylabel",
+    "body": [
+      "set ylabel '${1:y}'",
+      "$0"
+    ],
+    "description": "Sets the y axis title that will be displayed."
+  },
+  "zlabel": {
+    "prefix": "zlabel",
+    "body": [
+      "set zlabel '${1:z}'",
+      "$0"
+    ],
+    "description": "Sets the z axis title that will be displayed on the z axis"
+  },
+  "cblabel": {
+    "prefix": "cblabel",
+    "body": [
+      "set cblabel '${1:cb}'",
+      "$0"
+    ],
+    "description": "Sets the color bar title that will be displayed on the color bar axis"
+  },
+  "xtics": {
+    "prefix": "xtics",
+    "body": [
+      "set xtics ${1:1}",
+      "$0"
+    ],
+    "description": "Sets the tics for the x axis that will be displayed."
+  },
+  "ytics": {
+    "prefix": "ytics",
+    "body": [
+      "set ytics ${1:1}",
+      "$0"
+    ],
+    "description": "Sets the tics for the y axis that will be displayed."
+  },
+  "ztics": {
+    "prefix": "ztics",
+    "body": [
+      "set ztics ${1:1}",
+      "$0"
+    ],
+    "description": "Sets the tics for the z axis that will be displayed on the z axis"
+  },
+  "cbtics": {
+    "prefix": "cbtics",
+    "body": [
+      "set cbtics ${1:1}",
+      "$0"
+    ],
+    "description": "Sets the tics for the color bar that will be displayed on the color bar axis"
+  },
+  "samples": {
+    "prefix": "samples",
+    "body": [
+      "set samples ${1:1000}",
+      "$0"
+    ],
+    "description": "Sets the number of samples when plotting a continuous function"
+  },
+  "logscale": {
+    "prefix": "logscale",
+    "body": [
+      "set logscale ${1:y}",
+      "$0"
+    ],
+    "description": "Sets axes to have a logarithmic scaling"
+  },
+  "format": {
+    "prefix": "format",
+    "body": [
+      "set format ${1:y} ${2:'%.1f'}",
+      "$0"
+    ],
+    "description": "Sets the format for axis tics"
+  },
+  "output": {
+    "prefix": "output",
+    "body": [
+      "set output ${1:'file'}",
+      "$0"
+    ],
+    "description": "Sets the output file"
+  }
+}
