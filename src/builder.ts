@@ -21,9 +21,7 @@ export class Builder {
             default   : break;
         }
         
-        this._extension.logger.addLogMessage(figBuilder.stderr.toString());
-        this._updateDiagnostic(document, figBuilder.stderr.toString())
-
+        this._updateDiagnostic(document, figBuilder.stderr.toString());
     }
 
     private _setTerm() {
@@ -33,32 +31,56 @@ export class Builder {
 
     private _updateDiagnostic(document: vscode.TextDocument, stderr: string) {
         this._diagnosticCollection.clear();
-        this._diagnosticCollection.set(document.uri, this._errorParser(stderr));
+        this._diagnosticCollection.set(document.uri, this._errorParser(document,stderr));
     }
     
     /**
+     * ***Pattern 1***********************
+     * 
      * set error
      *     ^
      * "file/path" line 7: invalid option
+     * 
+     * ***Pattern 2***********************
+     * 
+     * line 5: undefined variable: xy
+     * 
+     * ***********************************
      */
-    private _errorParser(stderr: string) {
-        if (stderr == '') {
+    private _errorParser(document: vscode.TextDocument, stderr: string) {
+        if (stderr === '') {
             return []
         }
 
         const lineRegExp:    RegExp = /(?<=line )[0-9]+/;
         const messageRegExp: RegExp = /(?<=[0-9]: ).*/;
 
-        let errLines = stderr.split('\n');
+        let errLine    = Number(lineRegExp.exec(stderr)?.toString()) -1  ?? 0;
+        let errMessage = messageRegExp.exec(stderr)?.toString();
+        if(!errMessage) {
+            errMessage = 'Check chanel output/gnulplot'
+            this._extension.logger.addLogMessage(stderr);
+            this._extension.logger.showLog()
+        }
+        let errStart=0, errEnd=1;
+        if (stderr.match(/\^/)) {
+            let errLines = stderr.split('\n');
+            errEnd  = errLines[1].length;
+            errStart   = errLines[2].length -2;
+        } 
+        else {
+            let varstr = stderr.match(/(?<=undefined variable: ).*/);
+            if(varstr) {
+                errStart = document.lineAt(errLine).text.indexOf(varstr.toString());
+                errEnd = errStart + varstr.toString.length;
+            }
+        }
 
-        let length  = errLines[1].length;
-        let start   = errLines[2].length -1;
-        let line    = Number(lineRegExp.exec(errLines[3])?.toString())  ?? 1;
-        let message = messageRegExp.exec(errLines[3])?.toString() ?? 'Parse Failed, Check Output/Gnuplot';
+        let errRange = new vscode.Range(errLine, errStart, errLine, errEnd);
 
         return [{
-			message: message,
-			range: new vscode.Range(new vscode.Position(line-1, start-1), new vscode.Position(line-1, length-1)),
+			message: errMessage,
+            range: errRange,
 			severity: vscode.DiagnosticSeverity.Error,
 			source: 'Gnuplot',
 		}]
