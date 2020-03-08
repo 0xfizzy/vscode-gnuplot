@@ -1,39 +1,36 @@
 import * as vscode from 'vscode';
+import {Watcher} from './watcher'
 import {Builder} from './builder';
-import {PreviewPanel} from './viewer';
-import {ProblemList} from './problem';
+import {Viewer} from './viewer';
+import {Logger} from './logger'
 
 export function activate(context: vscode.ExtensionContext) {	
+
+	let extension = new Extension(context.extensionPath)
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('gnuplot.view', () => {
-			preview(context.extensionPath);
-		})
+			extension.viewer.createViewr([extension.watcher]);
+			extension.watcher.startWatching();
+		})	
 	);
-}
 
-function preview(extensionPath: string) {
-    if(!vscode.window.activeTextEditor) {
-        return;
-	}
-
-	//Get the file to preview
-	let document =  vscode.window.activeTextEditor.document;
-	//Create a problem list
-	let problem = new ProblemList(vscode.languages.createDiagnosticCollection('Gnuplot'));
-	//Create a log channel
-	let log = vscode.window.createOutputChannel("gnuplot");
-    //Watch if the file is changed
-	let watcher = vscode.workspace.createFileSystemWatcher(document.uri.fsPath); 
-	//Create a preview panel
-	let viewer = new PreviewPanel(extensionPath, [watcher,problem,log]);
-
-    //If changed, build figure and update viewer
-    watcher.onDidChange(() => {
-		Builder.buildFig(document, problem);
-		viewer.update(Builder.getContent());
-		});
 }
 
 export class Extension {
+	public extensionPath: string;
 
+	public watcher: Watcher;
+	public builder: Builder;
+	public viewer: Viewer;
+	public logger: Logger;
+
+	constructor(extensionPath: string) {
+		this.extensionPath = extensionPath;
+
+		this.watcher = new Watcher(this);
+		this.builder = new Builder(this);
+		this.viewer = new Viewer(this);
+		this.logger = new Logger(this);
+	}
 }
