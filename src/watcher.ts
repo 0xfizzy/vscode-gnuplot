@@ -56,8 +56,9 @@ export class Watcher implements vscode.Disposable {
         }
 
         document.save();
-        this._extension.builder.buildFig(document);
-        this._extension.viewer.update(this._extension.builder.getContent());
+        let preview = this._extension.builder.buildFig(document);
+        if (preview != '' ) { this._watchedFiles[document.uri.fsPath].preview = preview; }
+        this._extension.viewer.update(this._watchedFiles[document.uri.fsPath].preview);
     }
 
     public constructor(extension: Extension) {

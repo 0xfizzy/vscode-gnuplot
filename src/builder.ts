@@ -6,22 +6,17 @@ export class Builder {
 
     private _extension: Extension;
     private _diagnosticCollection: vscode.DiagnosticCollection;
-    private _content: string = 'No output now';
-
-    public getContent() {
-        return this._content;
-    }
 
     public buildFig(document: vscode.TextDocument) {
         let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath]);
 
-        switch (figBuilder.status) {
-            case 0    : this._content =  figBuilder.stdout.toString();  break;
-            case null : vscode.window.showInformationMessage("Too Big");   break;
-            default   : break;
-        }
-        
         this._updateDiagnostic(document, figBuilder.stderr.toString());
+
+        switch (figBuilder.status) {
+            case 0    : return figBuilder.stdout.toString();
+            case null : vscode.window.showInformationMessage("Too Big"); return '';
+            default   : return '';
+        }
     }
 
     private _setTerm() {
