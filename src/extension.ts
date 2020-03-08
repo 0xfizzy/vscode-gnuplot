@@ -11,7 +11,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('gnuplot.view', () => {
 			extension.viewer.createViewr([extension.watcher]);
+			//extension.watcher.updatePreview(vscode.window.activeTextEditor?.document);
 			extension.watcher.startWatching();
+
 		})	
 	);
 

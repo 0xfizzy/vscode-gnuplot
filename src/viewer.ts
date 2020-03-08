@@ -54,7 +54,6 @@ export class Viewer {
 	private _dispose() {
 		this._panel?.dispose();
 		this._panel = undefined;
-		vscode.window.showInformationMessage('Shutdown');
 
 		while (this._disposables.length) {
 			const x = this._disposables.pop();
