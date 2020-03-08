@@ -15,8 +15,6 @@ export class Builder {
     public buildFig(document: vscode.TextDocument) {
         let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath]);
 
-        vscode.window.showInformationMessage('123');
-
         switch (figBuilder.status) {
             case 0    : this._content =  figBuilder.stdout.toString();  break;
             case null : vscode.window.showInformationMessage("Too Big");   break;
@@ -38,7 +36,11 @@ export class Builder {
         this._diagnosticCollection.set(document.uri, this._errorParser(stderr));
     }
     
-    //
+    /**
+     * set error
+     *     ^
+     * "file/path" line 7: invalid option
+     */
     private _errorParser(stderr: string) {
         if (stderr == '') {
             return []

@@ -18,9 +18,7 @@ export class Viewer {
 	}
 
 	public createViewr(disposables?: vscode.Disposable[]) {
-		vscode.window.showInformationMessage('abc')
 		if(!this._panel) {
-			vscode.window.showInformationMessage('def')
 			this._disposables = disposables ?? [];
 			this._panel = this._createPanel(this._extension.extensionPath);
 		}
