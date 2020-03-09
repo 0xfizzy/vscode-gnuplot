@@ -26,7 +26,7 @@ export class Watcher implements vscode.Disposable {
         this._changeTimeout = this._config.get('timeout') as number;
     }
 
-    public updatePreview(document: vscode.TextDocument | undefined) {
+    private _updatePreview(document: vscode.TextDocument | undefined) {
         if(!document) { return }
         if( document.languageId != 'gnuplot')  { return }
         
@@ -51,7 +51,7 @@ export class Watcher implements vscode.Disposable {
         if(!e) { return }
 
         this._watch(e.document);
-        this.updatePreview(e.document);
+        this._updatePreview(e.document);
     }
 
     public onFileChange(document: vscode.TextDocument, waitedDelay?: boolean) {
@@ -71,7 +71,7 @@ export class Watcher implements vscode.Disposable {
             return
         }
 
-        this.updatePreview(document);
+        this._updatePreview(document);
     }
 
     private _watch(document: vscode.TextDocument) {

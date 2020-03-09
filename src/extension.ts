@@ -11,9 +11,10 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('gnuplot.view', () => {
 			extension.viewer.createViewr([extension.watcher]);
-			//extension.watcher.updatePreview(vscode.window.activeTextEditor?.document);
 			extension.watcher.startWatching();
-
+			if(vscode.window.activeTextEditor?.document.languageId == 'gnuplot') {
+				extension.viewer.update(extension.builder.buildFig(vscode.window.activeTextEditor.document));
+			}
 		})	
 	);
 
