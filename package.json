@@ -69,7 +69,8 @@
             {
                 "key": "ctrl+alt+v",
                 "mac": "cmd+alt+v",
-                "command": "gnuplot.view"
+                "command": "gnuplot.view",
+                "when": "editorLangId == 'gnuplot'"
             }
         ],
         "configuration": {
