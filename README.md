@@ -10,7 +10,7 @@ Make sure you have added the directory containing gnuplot binary to **PATH** env
 
 ![preview](images/preview.png)
 
-Just open your gnuplot script and use command `gnuplot.view`. Preview panel will refresh automatically everytime your file is saved.
+Just open your gnuplot script and use command `gnuplot.view`. Preview panel will refresh automatically everytime your file is changed.
 
 ### Error Message Parser
 
