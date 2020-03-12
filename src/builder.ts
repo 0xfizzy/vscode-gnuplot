@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
-import * as cp from 'child_process'
-import {Extension} from './extension'
+import * as cp from 'child_process';
+import * as path from 'path';
+import {Extension} from './extension';
 
 export class Builder {
 
@@ -8,7 +9,7 @@ export class Builder {
     private _diagnosticCollection: vscode.DiagnosticCollection;
 
     public buildFig(document: vscode.TextDocument) {
-        let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath]);
+        let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath],{cwd:path.dirname(document.uri.fsPath)});
 
         this._updateDiagnostic(document, figBuilder.stderr.toString());
 
