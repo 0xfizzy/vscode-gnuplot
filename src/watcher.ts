@@ -38,6 +38,7 @@ export class Watcher implements vscode.Disposable {
 
     public startWatching() {
         this.readConfig();
+        this._extension.builder.readConfig();
         this._disposables = [
         vscode.workspace.onDidChangeTextDocument(
             (e: vscode.TextDocumentChangeEvent) => {this.onFileChange(e.document)}
@@ -57,7 +58,7 @@ export class Watcher implements vscode.Disposable {
     public onFileChange(document: vscode.TextDocument, waitedDelay?: boolean) {
         this._watch(document);
         
-        if ( +new Date() - this._watchedFiles[document.uri.fsPath].lastChange < this._changeDelay) {
+        if (+new Date() - this._watchedFiles[document.uri.fsPath].lastChange < this._changeDelay) {
             if (!waitedDelay) {
                 this._watchedFiles[document.uri.fsPath].lastChange = +new Date();
                 setTimeout( () => { this.onFileChange(document, true)}, this._changeDelay)

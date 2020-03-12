@@ -7,17 +7,37 @@ export class Builder {
 
     private _extension: Extension;
     private _diagnosticCollection: vscode.DiagnosticCollection;
+    private _config: vscode.WorkspaceConfiguration | undefined;
+    private _maxBuffer: number =  20*1024*1024;
 
     public buildFig(document: vscode.TextDocument) {
-        let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath],{cwd:path.dirname(document.uri.fsPath)});
+        let figBuilder = cp.spawnSync('gnuplot',['-e',this._setTerm(),document.uri.fsPath],{
+            cwd:path.dirname(document.uri.fsPath),
+            maxBuffer: this._maxBuffer
+        });
 
         this._updateDiagnostic(document, figBuilder.stderr.toString());
 
         switch (figBuilder.status) {
             case 0    : return figBuilder.stdout.toString();
-            case null : vscode.window.showInformationMessage("Too Big"); return '';
+            case null : this._whyStatusNull(figBuilder.signal); return '';
             default   : return '';
         }
+    }
+
+    public readConfig() {
+        this._config = vscode.workspace.getConfiguration('gnuplot.builder');
+        this._maxBuffer = this._config.get('maxBuffer') as number;
+    }
+
+    private _whyStatusNull(signal: string | null) {
+        const message = `Build process killed, signal is ${signal}`;
+        let reason = '';
+        if (signal === 'SIGTERM') {
+            reason = `Maybe the figure is to complicated to preview. 
+            Try to expand the buffer in settings`;
+        }
+        vscode.window.showInformationMessage(message,reason);
     }
 
     private _setTerm() {
