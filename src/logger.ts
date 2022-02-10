@@ -24,6 +24,6 @@ export class Logger {
     }
 
     showLog() {
-        this._logPanel.show()
+        this._logPanel.show(true)
     }
 }
